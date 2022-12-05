@@ -1,0 +1,12 @@
+﻿{
+  "Id": "LegsBeGoneSNMod",
+  "DisplayName": "Legs Be Gone",
+  "Author": "MadScience",
+  "Version": "1.0.0",
+  "Enable": true,
+  "AssemblyName": "LegsBeGone.dll",
+  "VersionDependencies": {
+    "SMLHelper": "2.14.1"
+  },
+  "Game": "Subnautica"
+}
