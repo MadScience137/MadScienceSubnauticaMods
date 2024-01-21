@@ -355,7 +355,6 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Data\LegData.cs" />
         <Compile Include="Data\LegDataProvider.cs" />
         <Compile Include="Extensions\HandReticleExtension.cs" />
         <Compile Include="LegsBeGonePluginSN.cs" />
