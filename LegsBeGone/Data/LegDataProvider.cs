@@ -1,23 +1,16 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Nautilus.Utility;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace MadScienceSubnauticaMods.LegsBeGone.Data
 {
     public static class LegDataProvider
     {
-        private const float Slack = 0.1f;
-
         private static List<Vector3> disabledLegs = new List<Vector3>();
-        public static int Count => disabledLegs.Count;
-
-        public static void LoadFromArray(Vector3[] a)
-        {
-            if (a == null) return;
-            disabledLegs = a.ToList();
-        }
-
-        public static Vector3[] ToArray() => disabledLegs.ToArray();
+        private const float Slack = 0.1f;
 
         public static bool TogglePiece(Vector3 cell)
         {
@@ -49,6 +42,34 @@ namespace MadScienceSubnauticaMods.LegsBeGone.Data
         private static bool VectorSloppyEquals(Vector3 v1, Vector3 v2)
         {
             return Vector3.Distance(v1, v2) < Slack;
+        }
+
+        public static void Load()
+        {
+            var path = GetFilePath();
+
+            if (File.Exists(path))
+            {
+                var data = JsonConvert.DeserializeObject<Vector3[]>(File.ReadAllText(path));
+                disabledLegs = data == null ? disabledLegs : data.ToList();
+            }
+
+            LegsBeGonePluginSN.logger.LogInfo($"Loaded {disabledLegs.Count} pieces of leg data.");
+        }
+
+        public static void Save()
+        {
+            var json = JsonConvert.SerializeObject(disabledLegs.ToArray(),
+                Formatting.None,
+                new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }
+            );
+            File.WriteAllText(GetFilePath(), json);
+            LegsBeGonePluginSN.logger.LogInfo($"Saved {disabledLegs.Count} pieces of leg data.");
+        }
+
+        private static string GetFilePath()
+        {
+            return $"{SaveUtils.GetCurrentSaveDataDir()}/LegsBeGoneData.json";
         }
     }
 }

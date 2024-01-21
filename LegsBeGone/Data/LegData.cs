@@ -1,4 +1,4 @@
-﻿using SMLHelper.V2.Json;
+﻿using Nautilus.Json;
 using UnityEngine;
 
 namespace MadScienceSubnauticaMods.LegsBeGone.Data
