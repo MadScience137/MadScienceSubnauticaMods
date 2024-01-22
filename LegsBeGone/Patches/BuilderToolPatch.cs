@@ -44,9 +44,9 @@ namespace MadScienceSubnauticaMods.LegsBeGone.patches
 
                 var cell = baseObject.WorldToGrid(cellObject.transform.position);
                 var cellType = baseObject.GetCell(cell);
-
+                
                 var isToggleable = cellType == Base.CellType.Corridor || cellType == Base.CellType.Room || cellType == Base.CellType.Foundation ||
-                                   cellType == Base.CellType.Moonpool;
+                                   cellType == Base.CellType.Moonpool || cellType == Base.CellType.LargeRoom;
 
                 return isToggleable ? cellObject : null;
             }
@@ -100,12 +100,12 @@ namespace MadScienceSubnauticaMods.LegsBeGone.patches
                 var pressedInput = GameInput.GetPressedInput(GameInput.Device.Keyboard);
                 GameInput.scanningInput = false;
 
-                return string.Equals(pressedInput, KeyCode.T.ToString());
+                return string.Equals(pressedInput, LegsBeGonePluginSN.ModConfig.toggleKey.ToString());
             }
 
             private static void SetInteractionText()
             {
-                var toggleLegsMessage = $"\nToggle compartment legs (<color=#ADF8FFFF>{KeyCode.T.ToString()}</color>)";
+                var toggleLegsMessage = $"\nToggle compartment legs (<color=#ADF8FFFF>{LegsBeGonePluginSN.ModConfig.toggleKey.ToString()}</color>)";
                 HandReticle.main.AppendTextRaw(HandReticle.TextType.HandSubscript, toggleLegsMessage);
             }
         }

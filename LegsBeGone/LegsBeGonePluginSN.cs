@@ -2,6 +2,7 @@
 using BepInEx.Logging;
 using HarmonyLib;
 using MadScienceSubnauticaMods.LegsBeGone.Data;
+using Nautilus.Handlers;
 using Nautilus.Utility;
 
 namespace MadScienceSubnauticaMods.LegsBeGone
@@ -17,12 +18,14 @@ namespace MadScienceSubnauticaMods.LegsBeGone
         private static readonly Harmony Harmony = new Harmony(Guid);
 
         public static ManualLogSource logger;
+        public static ModConfig ModConfig;
 
         private void Awake()
         {
             Harmony.PatchAll();
             Logger.LogInfo(PluginName + " " + VersionString + " " + "loaded.");
             logger = Logger;
+            ModConfig = OptionsPanelHandler.RegisterModOptions<ModConfig>();
             SaveUtils.RegisterOnStartLoadingEvent(LegDataProvider.Load);
             SaveUtils.RegisterOnSaveEvent(LegDataProvider.Save);
         }
